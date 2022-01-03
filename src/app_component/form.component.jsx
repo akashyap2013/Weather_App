@@ -31,7 +31,7 @@ const Form = props => {
         </div>
       </form>
       
-      <p>lets do it </p>
+      <p>lets it </p>
     </div>
   );
 };
