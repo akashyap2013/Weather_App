@@ -30,9 +30,8 @@ const Form = props => {
           </div>
         </div>
       </form>
-
       
-      <p>THIS SHOULD SHOOW</p>
+      <p>lets do it </p>
     </div>
   );
 };
