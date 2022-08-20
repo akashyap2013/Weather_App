@@ -1,5 +1,6 @@
-form {
-  margin-top: 3rem;
+.form_container{
+  padding-top: 1.2rem;
+  margin-top: 0 !important;
 }
 
 form input[name="city"],

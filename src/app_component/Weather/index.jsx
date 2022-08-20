@@ -4,7 +4,7 @@ import "./weather.style.css";
 const Weather = props => {
   return (
     <div className="container text-light">
-      <div className="Card">
+      <div className="Card text-center">
         <h1 className="text-white py-3">{props.cityname}</h1>
         <h5 className="py-4">
           <i className={`wi ${props.weatherIcon} display-1`} />

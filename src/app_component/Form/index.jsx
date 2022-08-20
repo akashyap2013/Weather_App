@@ -2,10 +2,12 @@ import React from "react";
 import "./form.style.css";
 
 const Form = props => {
+  const {loadweather, error} = props;
+
   return (
-    <div className="container h-100">
-      <form onSubmit={props.loadweather}>
-        <div>{props.error ? error() : ""}</div>
+    <div className="container form_container h-100">
+      <form onSubmit={loadweather}>
+        <div>{error ? <Error/> : ""}</div>
         <div className="row">
           <div className="col-md-3 offset-md-2">
             <input
@@ -26,7 +28,7 @@ const Form = props => {
             />
           </div>
           <div className="col-md-3 mt-md-0 mt-2 text-md-left ">
-            <button className="btn btn-warning">Get Weather</button>
+            <button className="btn btn-warning mt-3">Get Weather</button>
           </div>
         </div>
       </form>
@@ -34,7 +36,7 @@ const Form = props => {
   );
 };
 
-const error = props => {
+const Error = props => {
   return (
     <div className="alert alert-danger mx-5" role="alert">
       Please Enter City and Country...!

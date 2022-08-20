@@ -1,8 +1,8 @@
 import React from "react";
-import "./App.css";
-import Form from "./app_component/form.component";
-import Weather from "./app_component/weather.component";
+import Form from "./app_component/Form";
+import Weather from "./app_component/Weather";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./index.css";
 
 // git project https://github.com/erikflowers/weather-icons
 import "weather-icons/css/weather-icons.css";
@@ -21,7 +21,8 @@ class App extends React.Component {
       temp_max: null,
       temp_min: null,
       description: "",
-      error: false
+      error: false,
+      loading: false,
     };
 
     this.weatherIcon = {
@@ -70,32 +71,40 @@ class App extends React.Component {
 
   getWeather = async e => {
     e.preventDefault();
-
     const country = e.target.elements.country.value;
     const city = e.target.elements.city.value;
 
     if (country && city) {
-      const api_call = await fetch(
-        `http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${Api_Key}`
-      );
-
-      const response = await api_call.json();
-
-      this.setState({
-        city: `${response.name}, ${response.sys.country}`,
-        country: response.sys.country,
-        main: response.weather[0].main,
-        celsius: this.calCelsius(response.main.temp),
-        temp_max: this.calCelsius(response.main.temp_max),
-        temp_min: this.calCelsius(response.main.temp_min),
-        description: response.weather[0].description,
-        error: false
-      });
-
-      // seting icons
-      this.get_WeatherIcon(this.weatherIcon, response.weather[0].id);
-
-      console.log(response);
+      //start the loading 
+    this.setState({ loading: true });
+      try{
+        const api_call = await fetch(
+          `http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${Api_Key}`
+        );
+  
+        const response = await api_call.json();
+  
+        this.setState({
+          city: `${response.name}, ${response.sys.country}`,
+          country: response.sys.country,
+          main: response.weather[0].main,
+          celsius: this.calCelsius(response.main.temp),
+          temp_max: this.calCelsius(response.main.temp_max),
+          temp_min: this.calCelsius(response.main.temp_min),
+          description: response.weather[0].description,
+          error: false
+        });
+  
+        // seting icons
+        this.get_WeatherIcon(this.weatherIcon, response.weather[0].id);
+  
+        this.setState({ loading: false });
+        console.log(response);
+      }catch(error){
+        //start the loading 
+        this.setState({ loading: false });
+        alert("failed to load weather");
+      }
     } else {
       this.setState({
         error: true
@@ -107,6 +116,9 @@ class App extends React.Component {
     return (
       <div className="App">
         <Form loadweather={this.getWeather} error={this.state.error} />
+        {this.state.loading && 
+            <p className="loader__text">Loading...</p>
+        }
         <Weather
           cityname={this.state.city}
           weatherIcon={this.state.icon}
