@@ -14,3 +14,14 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.App{
+  width: 100%;
+  min-height: 100vh;
+}
+
+.loader__text{
+  text-align: center;
+  font-size: 1.2rem;
+  color: white;
+}
